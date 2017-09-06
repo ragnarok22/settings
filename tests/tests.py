@@ -1,31 +1,33 @@
 import unittest
-import language
+from language import translate
 
 
 class TestLanguageClass(unittest.TestCase):
-	def setUp(self):
-		class Window(language.Language):
-			def __init__(self):
-				super(Window, self).__init__()
-				self.lang = 'es'
-				self.btn = language.gettext('setting', self)
-		self.window = Window()
-	
-	def test_translate(self):
-		self.assertEqual(self.window.btn, 'configuración')
+    def setUp(self):
+        class Window(translate):
+            def __init__(self):
+                super(Window, self).__init__()
+                self.lang = 'es'
+                self.btn = translate.gettext('setting', self)
 
-		
+        self.window = Window()
+
+    def test_translate(self):
+        self.assertEqual(self.window.btn, 'configuraciï¿½n')
+
+
 class TestLanguageClassInherit(unittest.TestCase):
-	def setUp(self):
-		class Window(language.Language):
-			def __init__(self):
-				super(Window, self).__init__()
-				self.btn = language.gettext('setting', self)
-		self.window = Window()
-	
-	def test_translate(self):
-		self.assertEqual(self.window.btn, 'setting')
-		
-		
+    def setUp(self):
+        class Window(translate.Language):
+            def __init__(self):
+                super(Window, self).__init__()
+                self.btn = translate.gettext('setting', self)
+
+        self.window = Window()
+
+    def test_translate(self):
+        self.assertEqual(self.window.btn, 'setting')
+
+
 if __name__ == '__main__':
-	unittest.main()
+    unittest.main()
