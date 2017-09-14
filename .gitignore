@@ -49,6 +49,7 @@ coverage.xml
 # Translations
 *.mo
 *.pot
+*.lng
 
 # Django stuff:
 *.log
@@ -60,6 +61,9 @@ instance/
 
 # Scrapy stuff:
 .scrapy
+
+# Jetbrain stuff:
+.idea/
 
 # Sphinx documentation
 docs/_build/
