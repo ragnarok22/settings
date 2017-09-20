@@ -7,6 +7,9 @@ class LanguageNotFoundError(FileNotFoundError):
         super(LanguageNotFoundError, self).__init__()
         self.message = message
 
+    def __str__(self):
+        return self.message
+
 
 class Language(object):
     def __init__(self, lang='en'):
@@ -34,7 +37,7 @@ def read_lang_file(lang):
     except FileNotFoundError:
         raise LanguageNotFoundError('The language File \'{0}\' was not found on folder \'language\''.format(file))
     except:
-        print('Error inesperado', sys.exc_info()[0])
+        print('Unexpected error', sys.exc_info()[0])
 
 
 def words_dic(str_file):
