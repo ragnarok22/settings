@@ -6,10 +6,18 @@ from language.translate import Language, gettext as _
 
 class TestLanguageClass(unittest.TestCase):
     def setUp(self):
+        # create a language folder
+        try:
+            os.mkdir('language')
+        except FileExistsError:
+            pass
         # write a language file
         try:
-            with open('es.lng', 'w') as file:
+            with open('language/es.lng', 'w') as file:
                 string = """hello:hola\nyou:tu"""
+                file.write(string)
+            with open('language/en.lng', 'w') as file:
+                string = """hola:hello"""
                 file.write(string)
         except FileNotFoundError:
             pass
@@ -26,11 +34,16 @@ class TestLanguageClass(unittest.TestCase):
     def test_translate(self):
         self.assertEqual(self.window.btn, 'hola')
 
+    def test_gettext_without_parent(self):
+        self.assertEqual(_('hello', None), 'hello')
+
     def tearDown(self):
         """"
         Delete a language file
         """
-        os.remove("es.lng")
+        os.remove("language/es.lng")
+        os.remove('language/en.lng')
+        os.removedirs('language')
 
 
 class TestLanguageClassInherit(unittest.TestCase):
@@ -44,6 +57,9 @@ class TestLanguageClassInherit(unittest.TestCase):
 
     def test_not_translate(self):
         self.assertEqual(self.window.btn, 'hello')
+
+    def test_gettext_without_parent_and_file(self):
+        self.assertEqual(_('hello', None), 'hello')
 
 
 if __name__ == '__main__':
