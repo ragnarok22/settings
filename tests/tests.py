@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from language import translate
+from language.translate import Language, gettext as _
 
 
 class TestLanguageClass(unittest.TestCase):
@@ -15,11 +15,11 @@ class TestLanguageClass(unittest.TestCase):
             pass
 
         # create a Language Class
-        class Window(translate.Language):
+        class Window(Language):
             def __init__(self):
                 super(Window, self).__init__()
                 self.lang = 'es'
-                self.btn = translate.gettext('hello', self)
+                self.btn = _('hello', self)
 
         self.window = Window()
 
@@ -35,10 +35,10 @@ class TestLanguageClass(unittest.TestCase):
 
 class TestLanguageClassInherit(unittest.TestCase):
     def setUp(self):
-        class Window(translate.Language):
+        class Window(Language):
             def __init__(self):
                 super(Window, self).__init__()
-                self.btn = translate.gettext('hello', self)
+                self.btn = _('hello', self)
 
         self.window = Window()
 
