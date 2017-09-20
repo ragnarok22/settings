@@ -1,5 +1,10 @@
+import os
 import sys
 import warnings
+
+
+LANG_FOLDER_NAME = 'language'
+EXTENSION = '.lng'
 
 
 class LanguageNotFoundError(FileNotFoundError):
@@ -26,7 +31,7 @@ def read_lang_file(lang):
     """
     :return un str que solo contiene los valores del idioma y la traduccion
     """
-    file = lang + '.lng'
+    file = lang + EXTENSION
     string = ""
     try:
         with open(file, 'r') as f:
@@ -38,6 +43,10 @@ def read_lang_file(lang):
         raise LanguageNotFoundError('The language File \'{0}\' was not found on folder \'language\''.format(file))
     except:
         print('Unexpected error', sys.exc_info()[0])
+
+
+def write_lang_file():
+    os.mkdir(LANG_FOLDER_NAME)
 
 
 def words_dic(str_file):
