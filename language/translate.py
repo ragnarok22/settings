@@ -41,7 +41,7 @@ def read_lang_file(lang):
                 string += temp[0]
         return string
     except FileNotFoundError:
-        raise LanguageNotFoundError('The language File \'{0}\' was not found on folder \'{1}\''.
+        raise LanguageNotFoundError('The language File \'{0}\' was not found on \'{1}\' folder'.
                                     format(file, LANG_FOLDER_NAME))
     except:
         print('Unexpected error', sys.exc_info()[0])
@@ -66,7 +66,7 @@ def words_dic(str_file):
 
 def gettext(text, parent):
     if not parent:
-        parent = Language()
+        parent = Language('en')
     try:
         lang_file = read_lang_file(parent.lang)
         words = words_dic(lang_file)
@@ -75,6 +75,6 @@ def gettext(text, parent):
             return result  # si la palabra se encuentra en el fichero se retorna
         else:
             return text  # sino se retorna el mismo texto
-    except LanguageNotFoundError as e:
+    except LanguageNotFoundError as e:  # el idioma especificado no se encontro y se retorna el mismo texto
         warnings.warn("Language not found. {0}".format(e.message), UserWarning)
-        return text  # el idioma especificado no se encontro y se retorna el mismo texto
+        return text
