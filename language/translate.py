@@ -2,7 +2,6 @@ import os
 import sys
 import warnings
 
-
 LANG_FOLDER_NAME = 'languages'
 EXTENSION = '.lng'
 
@@ -50,7 +49,10 @@ def read_lang_file(lang):
 
 
 def write_lang_file():
-    os.mkdir(LANG_FOLDER_NAME)
+    try:
+        os.mkdir(LANG_FOLDER_NAME)
+    except FileExistsError:
+        pass
 
 
 def words_dic(str_file):
@@ -76,9 +78,9 @@ def gettext(text, parent):
         words = words_dic(lang_file)
         result = words.get(text, None)
         if result:
-            return result  # si la palabra se encuentra en el fichero se retorna
+            return result  # if the word is found in the file, it returns him
         else:
-            return text  # sino se retorna el mismo texto
-    except LanguageNotFoundError as e:  # el idioma especificado no se encontro y se retorna el mismo texto
+            return text  # else it returns the same text
+    except LanguageNotFoundError as e:  # the idiom specified is not found and returns the same text
         warnings.warn("Language not found. {0}".format(e.message), UserWarning)
         return text

@@ -2,26 +2,26 @@ import os
 import unittest
 import shutil
 
-from language.translate import Language, gettext as _, read_lang_file, words_dic
+from language.translate import Language, gettext as _, read_lang_file, words_dic, LANG_FOLDER_NAME, EXTENSION
 
 
 class TestLanguageClass(unittest.TestCase):
     def setUp(self):
         # create a language folder
         try:
-            os.mkdir('languages')
+            os.mkdir(LANG_FOLDER_NAME)
         except FileExistsError:
             pass
         # write a language file
         try:
-            with open('languages/es.lng', 'w') as file:
+            with open('languages/es{}'.format(EXTENSION), 'w') as file:
                 string = """# once upon a time three little pigs
 hello:hola
 you:tu # rock rules
 
 """
                 file.write(string)
-            with open('languages/en.lng', 'w') as file:
+            with open('languages/en{}'.format(EXTENSION), 'w') as file:
                 string = """hola:hello"""
                 file.write(string)
         except FileNotFoundError:
