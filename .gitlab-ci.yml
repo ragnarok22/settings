@@ -4,4 +4,4 @@ before_script:
 
 test:
     script:
-        - python3 -m unittest tests/tests.py
+        - python3 -m unittest discover -s tests/
