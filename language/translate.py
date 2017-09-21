@@ -3,7 +3,7 @@ import sys
 import warnings
 
 
-LANG_FOLDER_NAME = 'language'
+LANG_FOLDER_NAME = 'languages'
 EXTENSION = '.lng'
 
 
@@ -33,14 +33,16 @@ def read_lang_file(lang):
     """
     file = lang + EXTENSION
     string = ""
+    # noinspection PyBroadException
     try:
-        with open(file, 'r') as f:
+        with open('{0}/{1}'.format(LANG_FOLDER_NAME, file), 'r') as f:
             for w in f.readlines():
                 temp = w.split('#')
                 string += temp[0]
         return string
     except FileNotFoundError:
-        raise LanguageNotFoundError('The language File \'{0}\' was not found on folder \'language\''.format(file))
+        raise LanguageNotFoundError('The language File \'{0}\' was not found on folder \'{1}\''.
+                                    format(file, LANG_FOLDER_NAME))
     except:
         print('Unexpected error', sys.exc_info()[0])
 
@@ -63,6 +65,8 @@ def words_dic(str_file):
 
 
 def gettext(text, parent):
+    if not parent:
+        parent = Language()
     try:
         lang_file = read_lang_file(parent.lang)
         words = words_dic(lang_file)
