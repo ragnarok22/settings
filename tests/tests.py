@@ -2,7 +2,7 @@ import os
 import unittest
 import shutil
 
-from language.translate import Language, gettext as _
+from language.translate import Language, gettext as _, read_lang_file, words_dic
 
 
 class TestLanguageClass(unittest.TestCase):
@@ -15,7 +15,11 @@ class TestLanguageClass(unittest.TestCase):
         # write a language file
         try:
             with open('languages/es.lng', 'w') as file:
-                string = """hello:hola\nyou:tu"""
+                string = """# once upon a time three little pigs
+hello:hola
+you:tu # rock rules
+
+"""
                 file.write(string)
             with open('languages/en.lng', 'w') as file:
                 string = """hola:hello"""
@@ -38,9 +42,18 @@ class TestLanguageClass(unittest.TestCase):
     def test_gettext_without_parent(self):
         self.assertEqual(_('hello', None), 'hello')
 
+    def test_read_lang_file(self):
+        string = "hello:hola\nyou:tu\n"
+        self.assertEqual(read_lang_file('es'), string)
+
+    def test_words_dic(self):
+        dictionary = words_dic("hello:hola\nyou:tu\n")
+        result = {'hello': 'hola', 'you': 'tu'}
+        self.assertEqual(dictionary, result)
+
     def tearDown(self):
         """
-        Delete a language file
+        Delete a languages file
         """
         shutil.rmtree('languages')
 

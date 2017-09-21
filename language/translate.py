@@ -29,7 +29,9 @@ class Language(object):
 
 def read_lang_file(lang):
     """
-    :return un str que solo contiene los valores del idioma y la traduccion
+    read the language file and erase the comments
+    :param lang: the language
+    :return: a string with only the word and the translation
     """
     file = lang + EXTENSION
     string = ""
@@ -38,7 +40,7 @@ def read_lang_file(lang):
         with open('{0}/{1}'.format(LANG_FOLDER_NAME, file), 'r') as f:
             for w in f.readlines():
                 temp = w.split('#')
-                string += temp[0]
+                string += temp[0].strip(' ')
         return string
     except FileNotFoundError:
         raise LanguageNotFoundError('The language File \'{0}\' was not found on \'{1}\' folder'.
@@ -53,12 +55,14 @@ def write_lang_file():
 
 def words_dic(str_file):
     """
-    :param str_file: es un str, es el contenido del fichero
-    :return: un diccionario con las palabras como llave y su traduccion como valor
+    :param str_file: a file content
+    :return: a dictionary with the words as key and his translation as value
     """
     result = {}
     current = str_file.split('\n')
     for i in current:
+        if i == '':
+            continue
         temp = i.split(':')
         result[temp[0]] = temp[1]
     return result
